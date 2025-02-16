@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import authRoutes from "./routes/auth.routes.js";
+import roomsRoutes from "./routes/rooms.routes.js";
 
 const app = express();
 
@@ -18,6 +19,6 @@ app.use(express.json()); //Convierte los req.body en formato json
 app.use(cookieParser());
 
 app.use("/api", authRoutes);
-// app.use("/api");
+app.use("/api", roomsRoutes);
 
 export default app;

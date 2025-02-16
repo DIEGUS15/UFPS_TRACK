@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 
 export const register = async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, role } = req.body;
 
   try {
     const userFound = await User.findOne({ email });
@@ -19,12 +19,16 @@ export const register = async (req, res) => {
       username,
       email,
       password: passwordHash,
+      role: role || "student", //Si no se envía, se asigna el valor por defecto
     });
 
     //Se guarda el usuario
     const userSaved = await newUser.save();
 
-    const token = await createAccessToken({ id: userSaved._id });
+    const token = await createAccessToken({
+      id: userSaved._id,
+      role: userSaved.role,
+    }); //incluye el rol en el token
     res.cookie("token", token);
 
     //Devuelve el usuario  registrado
@@ -32,6 +36,7 @@ export const register = async (req, res) => {
       id: userSaved.id,
       username: userSaved.username,
       email: userSaved.email,
+      role: userSaved.role,
       createdAt: userSaved.createdAt,
       updatedAt: userSaved.updatedAt,
     });
@@ -52,7 +57,10 @@ export const login = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Incorrect password" });
 
-    const token = await createAccessToken({ id: userFound._id });
+    const token = await createAccessToken({
+      id: userFound._id,
+      role: userFound.role,
+    }); //Incluye el rol en el token
 
     res.cookie("token", token);
 
@@ -61,6 +69,7 @@ export const login = async (req, res) => {
       id: userFound.id,
       username: userFound.username,
       email: userFound.email,
+      role: userFound.role, //Devuelve el rol
       createdAt: userFound.createdAt,
       updatedAt: userFound.updatedAt,
     });
@@ -85,6 +94,7 @@ export const profile = async (req, res) => {
     id: userFound._id,
     username: userFound.username,
     email: userFound.email,
+    role: userFound.role,
     createdAt: userFound.createdAt,
     updatedAt: userFound.updatedAt,
   });
