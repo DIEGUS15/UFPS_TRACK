@@ -5,6 +5,7 @@ import cors from "cors";
 
 import authRoutes from "./routes/auth.routes.js";
 import roomsRoutes from "./routes/rooms.routes.js";
+import watchmanRoutes from "./routes/watchman.routes.js";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(cookieParser());
 
 app.use("/api", authRoutes);
 app.use("/api", roomsRoutes);
+app.use("/api", watchmanRoutes);
 
 export default app;
