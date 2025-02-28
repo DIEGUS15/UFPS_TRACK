@@ -10,10 +10,15 @@ const roomSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    roomUbication: {
-      type: String,
+    floor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Floor",
       required: true,
     },
+    // roomUbication: {
+    //   type: String,
+    //   required: true,
+    // },
     roomType: {
       type: String,
       required: true,
