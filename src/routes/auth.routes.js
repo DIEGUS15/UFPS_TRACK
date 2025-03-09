@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import {
   login,
   logout,
@@ -17,5 +18,21 @@ router.post("/login", validateSchema(loginSchema), login);
 router.post("/logout", logout);
 router.get("/verify", verifyToken);
 router.get("/profile", authRequired, profile);
+
+// Rutas para autenticación con Google
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    const token = req.user.token;
+    res.cookie("token", token);
+    res.redirect("http://localhost:5173"); // Redirige al frontend después de la autenticación
+  }
+);
 
 export default router;

@@ -40,6 +40,10 @@ function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:4000/api/auth/google";
+  };
+
   return (
     <div className="login-container">
       {siginErrors.map((error, i) => (
@@ -77,6 +81,10 @@ function LoginPage() {
 
         <button type="submit">Login</button>
       </form>
+
+      <button onClick={handleGoogleLogin} className="google-login-button">
+        Login with Google
+      </button>
 
       <p>
         Don't have an account? <Link to="/register">Sigin up</Link>

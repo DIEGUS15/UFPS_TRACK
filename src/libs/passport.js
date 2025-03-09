@@ -1,6 +1,6 @@
 // src/libs/passport.js
-import dotenv from "dotenv";
-dotenv.config(); // Carga las variables de entorno
+// import dotenv from "dotenv";
+// dotenv.config(); // Carga las variables de entorno
 
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
