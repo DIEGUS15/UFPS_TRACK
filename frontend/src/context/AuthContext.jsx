@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  //Limpia automáticamente los errores después de 5 segundos para no saturar al usuario con mensajes
+  // Limpia automáticamente los errores después de 5 segundos
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
-  //Efecto para verificar el token
+  // Verifica el token al cargar la aplicación
   useEffect(() => {
     async function checkLogin() {
       const cookies = Cookies.get();
@@ -90,7 +90,6 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
-  //Provision del contexto
   return (
     <AuthContext.Provider
       value={{
@@ -100,6 +99,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         user,
         isAuthenticated,
+        setIsAuthenticated, // Asegúrate de que esté incluido
+        setUser, // Asegúrate de que esté incluido
         errors,
       }}
     >

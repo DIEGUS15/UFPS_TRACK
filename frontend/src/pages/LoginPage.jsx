@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import WatchmanLogin from "../components/WatchmanLogin"; // Importa el nuevo componente
 
 function LoginPage() {
   const { signin, errors: siginErrors, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [isWatchmanLogin, setIsWatchmanLogin] = useState(false); // Estado para alternar entre login tradicional y watchman
 
   const [formData, setFormData] = useState({
     email: "",
@@ -52,42 +54,56 @@ function LoginPage() {
         </div>
       ))}
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-          />
-          {formErrors.email && <p className="error-text">{formErrors.email}</p>}
-        </div>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
-          {formErrors.password && (
-            <p className="error-text">{formErrors.password}</p>
-          )}
-        </div>
+      {isWatchmanLogin ? (
+        <WatchmanLogin />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+            {formErrors.email && (
+              <p className="error-text">{formErrors.email}</p>
+            )}
+          </div>
 
-        <button type="submit">Login</button>
-      </form>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+            />
+            {formErrors.password && (
+              <p className="error-text">{formErrors.password}</p>
+            )}
+          </div>
+
+          <button type="submit">Login</button>
+        </form>
+      )}
+
+      <button
+        onClick={() => setIsWatchmanLogin(!isWatchmanLogin)}
+        className="toggle-login-button"
+      >
+        {isWatchmanLogin ? "Login with Email" : "Login as Watchman"}
+      </button>
 
       <button onClick={handleGoogleLogin} className="google-login-button">
         Login with Google
       </button>
 
       <p>
-        Don't have an account? <Link to="/register">Sigin up</Link>
+        Don't have an account? <Link to="/register">Sign up</Link>
       </p>
     </div>
   );

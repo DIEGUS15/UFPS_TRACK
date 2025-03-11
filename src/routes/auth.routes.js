@@ -31,7 +31,7 @@ router.get(
   (req, res) => {
     const token = req.user.token;
     res.cookie("token", token);
-    res.redirect("http://localhost:5173"); // Redirige al frontend después de la autenticación
+    res.redirect("http://localhost:5173/profile"); // Redirige al frontend después de la autenticación
   }
 );
 

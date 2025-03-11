@@ -6,6 +6,7 @@ import { configurePassport } from "./libs/passport.js";
 
 import authRoutes from "./routes/auth.routes.js";
 import roomsRoutes from "./routes/rooms.routes.js";
+import watchmanRoutes from "./routes/watchman.routes.js";
 
 const app = express();
 
@@ -18,5 +19,9 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json()); //Convierte los req.body en formato json
 app.use(cookieParser());
+
+app.use("/api", authRoutes);
+app.use("/api", roomsRoutes);
+app.use("/api", watchmanRoutes);
 
 export default app;
