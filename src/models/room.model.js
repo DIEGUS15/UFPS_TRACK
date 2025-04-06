@@ -15,20 +15,17 @@ const roomSchema = new mongoose.Schema(
       ref: "Floor",
       required: true,
     },
-    // roomUbication: {
-    //   type: String,
-    //   required: true,
-    // },
     roomType: {
       type: String,
       required: true,
       enum: ["classroom", "auditorium", "teacher's room"],
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    seats: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Seat",
+      },
+    ],
   },
   {
     timestamps: true,

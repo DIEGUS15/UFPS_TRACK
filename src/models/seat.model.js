@@ -11,10 +11,22 @@ const seatSchema = mongoose.Schema(
       ref: "Room",
       required: true,
     },
+    hasComputer: {
+      type: Boolean,
+      default: true,
+    },
+    computerDetails: {
+      computerName: String,
+      computerSpecs: String,
+      isAvailable: {
+        type: Boolean,
+        default: true,
+      },
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.model("Seat", seatChema);
+export default mongoose.model("Seat", seatSchema);
